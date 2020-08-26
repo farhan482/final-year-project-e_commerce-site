@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "contactlist";
+}
+
+<br />
+<div class="container ">
+    <div class="row ">
+        <div class="col-md-6 offset-3">
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="card-title">Customer Messages</h5>
+                    <br />
+                    <hr />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>status</th>
+                                <th>Show Message</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ctbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade " id="cmyModal">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Messages</h4>
+                <button type="button" id="modalclose" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <form id="form">
+                        <input type="hidden" name="hdn" id="conhdnid" />
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" id="nametxt" name="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" id="email" class="form-control" name="email"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="sub" class="form-control" name="sub"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea rows="8" cols="60" id="msg" name="msg"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            @Html.DropDownList(" ", @ViewBag.msgstatus as SelectList, "Select", new { id = "msgstatus", @class = "form-control" })
+                        </div>
+                        <input type="submit" value="Done"  class="btn-block btn btn-outline-primary" />
+                    </form>
+                  
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        conload()
+        $("#form").on("submit", function (e) {
+            e.preventDefault();
+            var data = $("#form").serializeArray()
+            var fd = new FormData()
+            fd.append("con.con_id",data[0].value)
+            fd.append("con.name",data[1].value)
+            fd.append("con.email",data[2].value)
+            fd.append("con.subject",data[3].value)
+            fd.append("con.message",data[4].value)
+            fd.append("con.status", data[5].value)
+            $.ajax({
+                type: 'POST',
+                url: '/AdminPanel/Contact/update',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    conload()
+                    $("#ctbody").empty()
+                    $("#cmyModal").modal("hide")
+                }
+
+            })
+        })
+
+    })
+
+    function conload()
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/AdminPanel/Contact/showmsg',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                $.each(result, function (k, v) {
+                    $("#ctbody").append
+                        (
+                            "<tr>" +
+                            "<td>" + v.name + "</td>" +
+                            "<td>" + v.email + "</td>" +
+                            "<td>" + v.status + "</td>" +
+                            "<td><Button id='conupbtn' data-toggle='modal' itemid=" + v.con_id + " data-target='#cmyModal' class='btn btn-primary'>Show</Button</td>" +
+                            "</tr>"
+                        )
+
+                })
+                $("#ctbody #conupbtn").click(function () {
+                    var id = $(this).attr("itemid")
+                    var formdata = new FormData()
+                    formdata.append("id", id)
+                    $.ajax({
+                        type: 'POST',
+                        url: '/AdminPanel/Contact/getconbyid',
+                        data: formdata,
+                        contentType: false,
+                        processData: false,
+                        success: function (result) {
+                            $("#conhdnid").val(result.con_id)
+                            $("#nametxt").val(result.name)
+                            $("#email").val(result.email)
+                            $("#sub").val(result.subject)
+                            $("#msg").val(result.message)
+                            $("#msgstatus").val(result.status)
+
+                        }
+
+                    })
+                })
+            }
+
+        })
+    }
+
+
+
+</script>

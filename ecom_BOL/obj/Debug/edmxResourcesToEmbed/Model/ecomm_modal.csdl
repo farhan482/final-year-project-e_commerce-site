@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="category_tbl">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="product_tbl" Relationship="Self.FK__product_t__categ__1AD3FDA4" FromRole="category_tbl" ToRole="product_tbl" />
+    <NavigationProperty Name="sub_category_tbl" Relationship="Model.FK__sub_categ__paren__29221CFB" FromRole="category_tbl" ToRole="sub_category_tbl" />
+  </EntityType>
+  <EntityType Name="product_img">
+    <Key>
+      <PropertyRef Name="image_id" />
+    </Key>
+    <Property Name="image_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="image_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="p_id" Type="Int32" />
+    <NavigationProperty Name="product_tbl" Relationship="Self.FK__product_im__p_id__1DB06A4F" FromRole="product_img" ToRole="product_tbl" />
+  </EntityType>
+  <EntityType Name="product_tbl">
+    <Key>
+      <PropertyRef Name="p_id" />
+    </Key>
+    <Property Name="p_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="product_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="discount_percentage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="discounted_price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="net_price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="category_id" Type="Int32" />
+    <NavigationProperty Name="category_tbl" Relationship="Self.FK__product_t__categ__1AD3FDA4" FromRole="product_tbl" ToRole="category_tbl" />
+    <NavigationProperty Name="product_img" Relationship="Self.FK__product_im__p_id__1DB06A4F" FromRole="product_tbl" ToRole="product_img" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__product_t__categ__1AD3FDA4">
+    <End Role="category_tbl" Type="Self.category_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category_tbl">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="product_tbl">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__product_im__p_id__1DB06A4F">
+    <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="product_img" Type="Self.product_img" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product_tbl">
+        <PropertyRef Name="p_id" />
+      </Principal>
+      <Dependent Role="product_img">
+        <PropertyRef Name="p_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ecommerce_site_version_v_19_0Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="category_tbl" EntityType="Self.category_tbl" />
+    <EntitySet Name="product_img" EntityType="Self.product_img" />
+    <EntitySet Name="product_tbl" EntityType="Self.product_tbl" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__product_t__categ__1AD3FDA4" Association="Self.FK__product_t__categ__1AD3FDA4">
+      <End Role="category_tbl" EntitySet="category_tbl" />
+      <End Role="product_tbl" EntitySet="product_tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK__product_im__p_id__1DB06A4F" Association="Self.FK__product_im__p_id__1DB06A4F">
+      <End Role="product_tbl" EntitySet="product_tbl" />
+      <End Role="product_img" EntitySet="product_img" />
+    </AssociationSet>
+    <EntitySet Name="sub_category_tbl" EntityType="Model.sub_category_tbl" />
+    <AssociationSet Name="FK__sub_categ__paren__29221CFB" Association="Model.FK__sub_categ__paren__29221CFB">
+      <End Role="category_tbl" EntitySet="category_tbl" />
+      <End Role="sub_category_tbl" EntitySet="sub_category_tbl" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="sub_category_tbl">
+    <Key>
+      <PropertyRef Name="sub_cate_id" />
+    </Key>
+    <Property Name="sub_cate_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sub_category_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="parent_category_id" Type="Int32" />
+    <NavigationProperty Name="category_tbl" Relationship="Model.FK__sub_categ__paren__29221CFB" FromRole="sub_category_tbl" ToRole="category_tbl" />
+  </EntityType>
+  <Association Name="FK__sub_categ__paren__29221CFB">
+    <End Type="Model.category_tbl" Role="category_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="Model.sub_category_tbl" Role="sub_category_tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category_tbl">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="sub_category_tbl">
+        <PropertyRef Name="parent_category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

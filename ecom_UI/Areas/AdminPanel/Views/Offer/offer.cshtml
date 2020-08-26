@@ -1,0 +1,135 @@
+﻿@model ecom_BOL.Model.offer
+@{
+    ViewBag.Title = "offer";
+}
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Add Product Offer</h5>
+
+                    <hr />
+
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.product_name, new { id = "nametxt", @class = "form-control", placeholder = "Product Name" })
+                        <small>
+                            @Html.ValidationMessageFor(model => model.product_name, "", new { @class = "text-danger" })
+                        </small>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.product_description, new { id = "desctxt", @class = "form-control", placeholder = "Product Description" })
+                        <small>
+                            @Html.ValidationMessageFor(model => model.product_description, "", new { @class = "text-danger" })
+                        </small>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.price, new { id = "pricetxt", @class = "form-control", placeholder = "Product Price" })
+                        <small>
+                            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                        </small>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="button" value="Choose Images" class="btn btn-outline-secondary btn-block" id="chimg" />
+                        @Html.TextBoxFor(model => model.image_path, new { id = "proimg", type = "file", multiple = "multiple", @class = "form-control d-none" })
+                        <small id="proimgvalid" class="">
+                            @Html.ValidationMessageFor(model => model.image_path, "", new { @class = "text-danger" })
+                        </small>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="submit" value="Save" class="btn btn-primary btn-block" id="btnsave" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <img src="" id="offerimage" height="300" width="300" class="rounded" />
+
+        </div>
+        <br />
+        <hr />
+
+
+        
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var file;
+        $("#offerimage").attr("src", "/productimages/noimg.jpg")
+        $("#chimg").click(function () {
+
+            $("#proimg").trigger("click");
+            $("#proimg").change(function () {
+                 file = this.files
+
+                var reader = new FileReader
+                reader.readAsDataURL(file[0])
+                reader.onload = function (x) {
+                    $("#offerimage").attr("src", x.target.result)
+                }
+
+
+
+
+
+
+
+            })
+
+        })
+        $("#btnsave").click(function () {
+           
+            var name = $("#nametxt").val()
+            var desctxt = $("#desctxt").val()
+            var pricetxt = $("#pricetxt").val()
+            var formdata = new FormData()
+            formdata.append("ofr.product_name",name)
+            formdata.append("ofr.product_description",desctxt)
+            formdata.append("ofr.price", pricetxt)
+            formdata.append("ofr.offerimg", file[0])
+            $.ajax({
+                type: 'POST',
+                url: '/AdminPanel/Offer/addoffer',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                success: function ()
+                {
+                 $("#nametxt").val("")
+                   $("#desctxt").val("")
+                    $("#pricetxt").val("")
+                    $("#proimg").val("")
+                    $("#offerimage").attr("src", "/productimages/noimg.jpg")
+                }
+            })
+
+        })
+      
+
+
+
+
+
+
+
+
+    })
+</script>

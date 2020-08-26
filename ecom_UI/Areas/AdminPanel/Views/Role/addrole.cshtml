@@ -1,0 +1,35 @@
+﻿@model ecom_BOL.Model.C_role_tbl
+
+@{
+    ViewBag.Title = "Add Role";
+}
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                <h5 class="card-title">Add Role</h5>
+                <br />
+                <hr />
+                    <div class="form-horizontal">
+                     
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.user_role, new { @class = "form-control", id = "roletxt", placeholder = "Add Role" })
+                                @Html.ValidationMessageFor(model => model.user_role, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-primary btn-block" id="rolesavebtn" />
+                            </div>
+                        </div>
+                    </div>
+                </div></div></div>
+    </div>
+</div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>

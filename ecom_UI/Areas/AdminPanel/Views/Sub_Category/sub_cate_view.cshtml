@@ -1,0 +1,40 @@
+﻿@model ecom_BOL.Model.sub_category_tbl
+@{
+    ViewBag.Title = "Add Sub Category";
+}
+
+<br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-horizontal ">
+
+                            <h5 class="card-title">Add Sub Category</h5>
+                            <br />
+                            <hr />
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.sub_category_name, new { @class = "form-control", placeholder = "Sub Category Name", id = "subcatetxt" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.parent_category_id, @ViewBag.parent_category as SelectList, "Select", new { @class = "form-control", id = "parentcatenametxt" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="button" value="Save" class="btn btn-primary btn-block" id="subcatesavebtn" />
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+            </div>
+        </div>
+    </div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/custom.js"></script>

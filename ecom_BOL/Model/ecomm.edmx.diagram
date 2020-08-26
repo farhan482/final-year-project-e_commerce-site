@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="55cbe9b0a67e4ee88fdc7d8c51f7dc06" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.C_role_tbl" Width="1.5" PointX="9.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.category_tbl" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.order_address_details_tbl" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.order_amount_details_tbl" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.order_product_detaills_tbl" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.product_img" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.product_tbl" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sub_category_tbl" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.user_img_tbl" Width="1.5" PointX="12" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.user_tbl" Width="1.5" PointX="9.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.userrole_tbl" Width="1.5" PointX="12" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK__userrole___role___540C7B00" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__sub_categ__paren__29221CFB" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__order_pro__o_add__10216507" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__order_pro__order__0F2D40CE" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__order_prod__p_id__0E391C95" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__product_im__p_id__44CA3770" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__product_t__sub_c__41EDCAC5" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__user_img___user___56E8E7AB" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__userrole___user___531856C7" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.offer" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.contact" Width="1.5" PointX="3.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

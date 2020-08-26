@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Cart";
+    var nettotal = 0;
+}
+
+<section id="cart_items">
+    <div class="container">
+
+        <div class="cart_info">
+            <table class="table table-sm">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description"></td>
+                        <td class="price">Price</td>
+                        <td class="quantity">Quantity</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                   
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section> <!--/#cart_items-->
+<section id="do_action">
+    <div class="container">
+       
+        <div class="row">
+            <div class="col-sm-6 offset-6">
+                <div class="total_area">
+                    <ul>
+                       
+                        <li>Shipping Cost <span>Free</span></li>
+                        <li>Total <span id="netcost">@nettotal.ToString("##,#0.00")</span></li>
+                    </ul>
+                    <a class="btn btn-default update" href="/Shop/Shoppingcart/checkout">Check Out</a>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#do_action-->
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        cartload()
+        function cartload()
+        {
+            var nettotal = 0;
+            $.ajax({
+                type: 'GET',
+                url: '/Shop/Shoppingcart/loadcartitem',
+
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+                        $.each(data.item, function (key, value) {
+                            nettotal += value.total
+                            $("#netcost").text(new Intl.NumberFormat('en-ca', { style: 'currency', currency: 'cad' }).format(nettotal))
+                          
+                            $("#tbody").append
+                                (
+
+                                   
+                                    "<tr>" +
+                                    "<td class='cart_product'>" +
+                                    "<a href=''> <img src=" + value.proimg_path + " height='100' width='100'/></a>" +
+                                    "</td>" +
+                                    "<td class='cart_description'>" +
+                                    "<h4><a href=''>" + value.productname + "</a></h4>" +
+                                    "<p>Product ID:" + value.p_id + "</p>" +
+                                    "</td>" +
+                                    "<td class='cart_price'>" +
+                                    "<p>" + new Intl.NumberFormat('en-ca', { style: 'currency', currency: 'cad' }).format(value.rate) + "</p > " +
+                                    "</td>" +
+                                    "<td class='cart_quantity'>" +
+                                    "<div class='cart_quantity_button'>" +
+                                    "<a class='cart_quantity_down' itemscope=" + value.p_id + "> - </a>" +
+                                    "<input class='cart_quantity_input' type='text' name='quantity'  value=" + value.qty +".00"+ " autocomplete='off' size='2' disabled>" +
+                                    "<a class='cart_quantity_up' itemscope=" + value.p_id + "> + </a>" +
+
+                                    "</div>" +
+                                    "</td>" +
+                                    "<td class='cart_total'>" +
+                                    "<p class='cart_total_price'>"+ new Intl.NumberFormat('en-ca', { style: 'currency', currency: 'cad' }).format(value.total) + "</p>" +
+                                    "</td>" +
+                                    "<td class='cart_delete'>" +
+                                    "<a class='cart_quantity_delete' itemscope=" + value.p_id + "><i class='fa fa-times'></i></a>" +
+                                    "</td>" +
+                                    "</tr>"
+                                )
+
+
+                                                     
+                        })
+                        $("#tbody .cart_quantity_delete").click(function () {
+                          
+                            var id = $(this).attr("itemscope")
+                            var formdata = new FormData()
+                            formdata.append("id", id)
+                           
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Shop/Shoppingcart/deleteproduct',
+                                data: formdata,
+                                processData: false,
+                                contentType: false,
+                                success: function (item) {
+                                    if (item == 0)
+                                    {
+                                        $("#netcost").text("0.00")
+
+                                    }
+                                    $("#tbody").empty()
+                                  
+                                    cartload();
+                                }
+                            })
+
+
+
+
+                        })
+                        $(".cart_quantity_button .cart_quantity_up").click(function () {
+                            var id = $(this).attr("itemscope")
+                            var actiontype = $(this).attr("class")
+                            var formdata = new FormData()
+                            formdata.append("id", id)
+                            formdata.append("at", actiontype)
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Shop/Shoppingcart/updateqty',
+                                data: formdata,
+                                processData: false,
+                                contentType: false,
+                                success: function () {
+                                    $("#tbody").empty()
+                                    cartload();
+                                }
+                            })
+                        })
+                      
+                        $(".cart_quantity_button .cart_quantity_down").click(function () {
+                            var id = $(this).attr("itemscope")
+                            var actiontype = $(this).attr("class")
+                            var formdata = new FormData()
+                            formdata.append("id", id)
+                            formdata.append("at", actiontype)
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Shop/Shoppingcart/updateqty',
+                                data: formdata,
+                                processData: false,
+                                contentType: false,
+                                success: function () {
+                                    $("#tbody").empty()
+                                    cartload();
+                                }
+                            })
+                        })
+                    }
+
+                }
+
+            })
+            nettotal = 0;
+        }
+
+
+
+
+
+
+    })
+
+</script>

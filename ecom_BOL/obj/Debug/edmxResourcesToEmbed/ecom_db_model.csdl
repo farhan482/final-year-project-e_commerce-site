@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="order_address_details_tbl">
+    <Key>
+      <PropertyRef Name="o_addrs_id" />
+    </Key>
+    <Property Name="o_addrs_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="zip_or_postal_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="order_person_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="contact_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="order_amount_details_tbl" Relationship="Self.FK__order_amo__o_add__38996AB5" FromRole="order_address_details_tbl" ToRole="order_amount_details_tbl" />
+  </EntityType>
+  <EntityType Name="order_amount_details_tbl">
+    <Key>
+      <PropertyRef Name="order_no" />
+    </Key>
+    <Property Name="order_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="discount_percentage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="discounted_price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="gst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="net_total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="payment_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="o_addrs_id" Type="Int32" />
+    <NavigationProperty Name="order_address_details_tbl" Relationship="Self.FK__order_amo__o_add__38996AB5" FromRole="order_amount_details_tbl" ToRole="order_address_details_tbl" />
+    <NavigationProperty Name="order_product_detaills_tbl" Relationship="Self.FK__order_pro__order__3B75D760" FromRole="order_amount_details_tbl" ToRole="order_product_detaills_tbl" />
+  </EntityType>
+  <EntityType Name="order_product_detaills_tbl">
+    <Key>
+      <PropertyRef Name="opd_id" />
+    </Key>
+    <Property Name="opd_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="qty" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="order_no" Type="Int32" />
+    <NavigationProperty Name="order_amount_details_tbl" Relationship="Self.FK__order_pro__order__3B75D760" FromRole="order_product_detaills_tbl" ToRole="order_amount_details_tbl" />
+    <Property Name="p_id" Type="Int32" />
+    <NavigationProperty Name="product_tbl" Relationship="Model.FK__order_prod__p_id__4AB81AF0" FromRole="order_product_detaills_tbl" ToRole="product_tbl" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__order_amo__o_add__38996AB5">
+    <End Role="order_address_details_tbl" Type="Self.order_address_details_tbl" Multiplicity="0..1" />
+    <End Role="order_amount_details_tbl" Type="Self.order_amount_details_tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order_address_details_tbl">
+        <PropertyRef Name="o_addrs_id" />
+      </Principal>
+      <Dependent Role="order_amount_details_tbl">
+        <PropertyRef Name="o_addrs_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__order_pro__order__3B75D760">
+    <End Role="order_amount_details_tbl" Type="Self.order_amount_details_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="order_product_detaills_tbl" Type="Self.order_product_detaills_tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="order_amount_details_tbl">
+        <PropertyRef Name="order_no" />
+      </Principal>
+      <Dependent Role="order_product_detaills_tbl">
+        <PropertyRef Name="order_no" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ecom_entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="order_address_details_tbl" EntityType="Self.order_address_details_tbl" />
+    <EntitySet Name="order_amount_details_tbl" EntityType="Self.order_amount_details_tbl" />
+    <EntitySet Name="order_product_detaills_tbl" EntityType="Self.order_product_detaills_tbl" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__order_amo__o_add__38996AB5" Association="Self.FK__order_amo__o_add__38996AB5">
+      <End Role="order_address_details_tbl" EntitySet="order_address_details_tbl" />
+      <End Role="order_amount_details_tbl" EntitySet="order_amount_details_tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK__order_pro__order__3B75D760" Association="Self.FK__order_pro__order__3B75D760">
+      <End Role="order_amount_details_tbl" EntitySet="order_amount_details_tbl" />
+      <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+    </AssociationSet>
+    <EntitySet Name="product_tbl" EntityType="Model.product_tbl" />
+    <AssociationSet Name="FK__order_prod__p_id__4AB81AF0" Association="Model.FK__order_prod__p_id__4AB81AF0">
+      <End Role="product_tbl" EntitySet="product_tbl" />
+      <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+    </AssociationSet>
+    <EntitySet Name="product_img" EntityType="Model.product_img" />
+    <AssociationSet Name="FK__product_im__p_id__5EBF139D" Association="Model.FK__product_im__p_id__5EBF139D">
+      <End Role="product_tbl" EntitySet="product_tbl" />
+      <End Role="product_img" EntitySet="product_img" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="product_tbl">
+    <Key>
+      <PropertyRef Name="p_id" />
+    </Key>
+    <Property Name="p_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="product_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="discount_percentage" Type="Decimal" Precision="3" Scale="2" />
+    <Property Name="discounted_price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="net_price" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="order_product_detaills_tbl" Relationship="Model.FK__order_prod__p_id__4AB81AF0" FromRole="product_tbl" ToRole="order_product_detaills_tbl" />
+    <NavigationProperty Name="product_img" Relationship="Model.FK__product_im__p_id__5EBF139D" FromRole="product_tbl" ToRole="product_img" />
+  </EntityType>
+  <Association Name="FK__order_prod__p_id__4AB81AF0">
+    <End Type="Model.product_tbl" Role="product_tbl" Multiplicity="0..1" />
+    <End Type="Model.order_product_detaills_tbl" Role="order_product_detaills_tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product_tbl">
+        <PropertyRef Name="p_id" />
+      </Principal>
+      <Dependent Role="order_product_detaills_tbl">
+        <PropertyRef Name="p_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="product_img">
+    <Key>
+      <PropertyRef Name="image_id" />
+    </Key>
+    <Property Name="image_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="image_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="p_id" Type="Int32" />
+    <NavigationProperty Name="product_tbl" Relationship="Model.FK__product_im__p_id__5EBF139D" FromRole="product_img" ToRole="product_tbl" />
+  </EntityType>
+  <Association Name="FK__product_im__p_id__5EBF139D">
+    <End Type="Model.product_tbl" Role="product_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="Model.product_img" Role="product_img" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product_tbl">
+        <PropertyRef Name="p_id" />
+      </Principal>
+      <Dependent Role="product_img">
+        <PropertyRef Name="p_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

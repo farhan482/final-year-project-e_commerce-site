@@ -1,0 +1,480 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+<section id="slider">
+    <!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                  
+                    <div class="carousel-inner">
+                        <div class="carousel-item item active ">
+                            <div class="col-md-6 float-left">
+                                <h1><span>FA-ONLINE MART</span></h1>
+                                <h2>Pakistan No 1 Online Shopping Mart</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-md-6 float-right">
+                                <img src="~/img/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="~/img/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+                        @foreach (var offer in ViewBag.offer)
+                        {
+
+                            <div class="carousel-item item">
+                                <div class="col-md-6 float-left">
+                                    <h1><span>FA-ONLINE MART </span>OFFERS</h1>
+                                    <h2>@offer.product_name</h2>
+                                    <p>@offer.product_description</p>
+                                    <button type="button" class="btn btn-default get">Get it now</button>
+                                </div>
+                                <div class="col-md-6 float-right">
+                                    <img src="@Url.Content(offer.image_path)" class="girl img-responsive" alt="" width="484" height="441" />
+                                    <img src="~/img/home/pricing.png" class="pricing" alt="" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        @foreach (var item in ViewBag.category)
+                        {
+
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#@item.category_name">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            <b> @item.category_name</b>
+                                        </a>
+
+                                    </h4>
+
+                                </div>
+                                <div id=" @item.category_name" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach (var item2 in item.sub_category_tbl)
+                                            {
+                                                <li><a href="#row" itemscope="@item2.sub_cate_id" id="subcate" >@item2.sub_category_name </a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+
+            <div class="col-md-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">Products</h2>
+                    <div class="row" id="row">
+                        @foreach (var pro in ViewBag.product)
+                        {
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            @foreach (var img in pro.product_img)
+                                            {
+
+                                                <img src="@img.image_path" alt="" />
+
+                                            }
+                                            <h2>$@pro.net_price</h2>
+                                            <p>@pro.product_name</p>
+                                            <a class="btn btn-default add-to-cart" itemscope="@pro.p_id" id="addtocart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <a class="btn btn-default add-to-cart" itemscope="@pro.p_id" id="detail" data-target="#dmyModal" data-toggle="modal"><i class="fa fa-info-circle"></i>Details</a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        }
+
+                    </div>
+
+
+                </div><!--features_items-->
+                <div class="modal fade bd-example-modal-lg " id="dmyModal">
+                    <div class="modal-dialog modal-lg" id="myModaldia">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Product Details</h4>
+                                <button type="button" id="modalclose" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row ">
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/Shop/Shoppingcart/loadcartitem',
+
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.success) {
+                    $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+                }
+
+            }
+
+        })
+        $(".productinfo #detail").click(function () {
+            var id = $(this).attr("itemscope")
+            var formdata = new FormData()
+            formdata.append("id", id)
+            $.ajax({
+                type: 'POST',
+                url: '/AdminPanel/Product/get_product_detail_by_id',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+
+                    if (data[0].status == 1) {
+                        data[0].status = "In Stock"
+                    }
+                    else
+                    {
+                        data[0].status = "Out Of Stock"
+                    }
+                    $(".modal-body .container .row").empty()
+                    $(".modal-body .container .row").append
+                        (
+
+                            "<div class='col-sm-6 padding-right'>" +
+                            "<div class='view-product'>" +
+                            "<img src=" + data[0].image_path + " alt=''  />" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class='col-sm-6'>" +
+                            "<div class='product-information'>" +
+
+                            "<img src='/img/product-details/new.jpg' class='newarrival' alt='' />" +
+                            "<h2>" + data[0].product_name + "</h2>" +
+                            "<p>" + "Description : " + data[0].product_description+"</p>" +
+                            "<img src='/img/product-details/rating.png' />" +
+                            "</br>" +
+                            "<span>" +
+                         "<h2 class='title text-center contact-info text-orange'>" + "Net Price : " + new Intl.NumberFormat("en-ca", { style: 'currency', currency: 'cad' }).format(data[0].net_price) + "</h2>"+
+                                        "<label>Quantity:</label>"+
+                            "<input type='text' value='1' id='qtytxt'/>" +
+
+                                        "<button type='button' class='btn btn-fefault cart' id='addcart'>"+
+                                        "<i class='fa fa-shopping-cart'></i> Add To Cart</button>"+
+                            "</span>" +
+                            "<p><b>Price : </b> " + data[0].price + "</p>" +
+                            "<p><b>Disc% : </b> " + data[0].discount_percentage +"</p>" +
+                                    "<p><b>Availability:</b> "+data[0].status+"</p>"+
+                                    "<p><b>Condition:</b> New</p>"+
+                            "<p><b>Brand : </b>" + data[0].brand_manfacturer+"</p>"+
+                                    "<a href=''><img src='/img/product-details/share.png' class='share img-responsive' alt='' /></a>"+
+                                "</div>"+
+                                        "</div>"
+                        )
+
+
+
+
+
+                    if (data.success) {
+                        $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+
+                    }
+                    $(".modal-body .container .row #addcart").click(function () {
+
+                        var id = data[0].p_id
+                        var qty = $("#qtytxt").val()
+                        var formdata = new FormData()
+                        formdata.append("id", id)
+                        formdata.append("qty", qty)
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Shop/Shoppingcart/findproduct',
+                            data: formdata,
+                            processData: false,
+                            contentType: false,
+                            success: function (data) {
+                                $("#dmyModal").modal("hide")
+                                if (data == "logininvalid") {
+
+                                    window.location.href = "/Shop/Login/login"
+
+                                }
+                                if (data.success) {
+                                    $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+                                }
+
+                            }
+
+                        })
+
+                    })
+                }
+
+            })
+
+        })
+        $(".productinfo #addtocart").click(function () {
+            var id = $(this).attr("itemscope")
+            var formdata = new FormData()
+            formdata.append("id", id)
+            $.ajax({
+                type: 'POST',
+                url: '/Shop/Shoppingcart/findproduct',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data)
+                {
+                    if (data == "logininvalid") {
+
+                        window.location.href="/Shop/Login/login"
+
+                    }
+                    if (data.success) {
+                        $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+                    }
+
+                }
+
+            })
+
+        })
+
+        $(".panel-body ul #subcate").click(function () {
+            $("#row").empty()
+            var id = $(this).attr("itemscope");
+            var formdata = new FormData();
+            formdata.append("id", id);
+            $.ajax({
+                type: 'POST',
+                url: '/Shop/Home/searchprobycate',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $.each(data, function (key, value) {
+                        $(".title").text(value.sub_category_name)
+                        $("#row").append
+                            (
+                                 "<div class='col-sm-4 '>"+
+                            "<div class='product-image-wrapper'>"+
+                                "<div class='single-products'>"+
+                                    "<div class='productinfo text-center'>"+
+                                            "<img src="+value.image_path+" alt='' />"+
+                                "<h2>" + "$"+value.net_price + "</h2>" +
+                                        "<p>"+value.product_name+"</p>"+
+                                "<a class='btn btn-default add-to-cart' itemscope=" + value.p_id + " id='addtocart'><i class='fa fa-shopping-cart'></i>Add to cart</a>" +
+                                "<a class='btn btn-default add-to-cart' itemscope=" + value.p_id + " id='detail' data-target='#dmyModal' data-toggle='modal'><i class='fa fa-info-circle'></i>Details</a>"+
+
+                                    "</div>"+
+
+                                "</div>"+
+
+                            "</div>"+
+
+                                "</div>"
+                            )
+
+
+
+                    })
+                    $(".productinfo #detail").click(function () {
+                        var id = $(this).attr("itemscope")
+                        var formdata = new FormData()
+                        formdata.append("id", id)
+                        $.ajax({
+                            type: 'POST',
+                            url: '/AdminPanel/Product/get_product_detail_by_id',
+                            data: formdata,
+                            processData: false,
+                            contentType: false,
+                            success: function (data) {
+
+                                if (data[0].status == 1) {
+                                    data[0].status = "In Stock"
+                                }
+                                else {
+                                    data[0].status = "Out Of Stock"
+                                }
+                                $(".modal-body .container .row").empty()
+                                $(".modal-body .container .row").append
+                                    (
+
+                                        "<div class='col-sm-6 padding-right'>" +
+                                        "<div class='view-product'>" +
+                                        "<img src=" + data[0].image_path + " alt=''  />" +
+                                        "</div>" +
+                                        "</div>" +
+                                        "<div class='col-sm-6'>" +
+                                        "<div class='product-information'>" +
+
+                                        "<img src='/img/product-details/new.jpg' class='newarrival' alt='' />" +
+                                        "<h2>" + data[0].product_name + "</h2>" +
+                                        "<p>" + "Description : " + data[0].product_description + "</p>" +
+                                        "<img src='/img/product-details/rating.png' />" +
+                                        "</br>" +
+                                        "<span>" +
+                                        "<h2 class='title text-center contact-info text-orange'>" + "Net Price : " + new Intl.NumberFormat("en-ca", { style: 'currency', currency: 'cad' }).format(data[0].net_price) + "</h2>" +
+                                        "<label>Quantity:</label>" +
+                                        "<input type='text' value='1' id='qtytxt'/>" +
+
+                                        "<button type='button' class='btn btn-fefault cart' id='addcart'>" +
+                                        "<i class='fa fa-shopping-cart'></i> Add To Cart</button>" +
+                                        "</span>" +
+                                        "<p><b>Price : </b> " + data[0].price + "</p>" +
+                                        "<p><b>Disc% : </b> " + data[0].discount_percentage + "</p>" +
+                                        "<p><b>Availability:</b> " + data[0].status + "</p>" +
+                                        "<p><b>Condition:</b> New</p>" +
+                                        "<p><b>Brand : </b>" + data[0].brand_manfacturer + "</p>" +
+                                        "<a href=''><img src='/img/product-details/share.png' class='share img-responsive' alt='' /></a>" +
+                                        "</div>" +
+                                        "</div>"
+                                    )
+
+
+
+
+
+                                if (data.success) {
+                                    $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+
+                                }
+                                $(".modal-body .container .row #addcart").click(function () {
+
+                                    var id = data[0].p_id
+                                    var qty = $("#qtytxt").val()
+                                    var formdata = new FormData()
+                                    formdata.append("id", id)
+                                    formdata.append("qty", qty)
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/Shop/Shoppingcart/findproduct',
+                                        data: formdata,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function (data) {
+                                            $("#dmyModal").modal("hide")
+                                            if (data == "logininvalid") {
+
+                                                window.location.href = "/Shop/Login/login"
+
+                                            }
+                                            if (data.success) {
+                                                $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+                                            }
+
+                                        }
+
+                                    })
+
+                                })
+                            }
+
+                        })
+
+                    })
+                    $(".productinfo #addtocart").click(function () {
+                        var id = $(this).attr("itemscope")
+                        var formdata = new FormData()
+                        formdata.append("id", id)
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Shop/Shoppingcart/findproduct',
+                            data: formdata,
+                            processData: false,
+                            contentType: false,
+                            success: function (data) {
+                                if (data == "logininvalid") {
+
+                                    window.location.href = "/Shop/Login/login"
+
+                                }
+                                if (data.success) {
+                                    $("#cart").html("<i class='fa fa-shopping-cart'></i> Cart(" + data.counter + ")")
+                                }
+
+                            }
+
+                        })
+
+                    })
+                }
+
+            })
+
+
+
+
+        })
+
+
+
+
+    })
+
+</script>

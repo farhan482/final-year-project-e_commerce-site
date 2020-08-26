@@ -1,0 +1,146 @@
+﻿@model ecom_BOL.Model.user_tbl
+@{
+    ViewBag.Title = "User List";
+}
+<br />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User List</h5>
+                    <br />
+                        <hr />
+                    <table class="table table-sm table-striped text-center table-hover">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>UserName</th>
+                                <th>Password</th>
+                                <th>Email</th>
+                                <th>Contact No</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userlist">
+                        </tbody>
+                    </table>
+                    <div class="modal fade bd-example-modal-lg " id="userdetailModal">
+                        <div class="modal-dialog modal-lg" id="myModaldia">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">User Details</h4>
+                                    <button type="button" id="modalclose" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <img src="" id="userimg" height="150" width="150" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <label id="user_id"></label>
+                                            <label id="user_name"></label>
+                                            <label id="password"></label>
+                                            <label id="confirm_password"></label>
+                                            <label id="email_address"></label>
+                                            <label id="contact_no"></label>
+                                            <label id="user_status"></label>
+                                            <label id="user_role"></label>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade bd-example-modal-lg " id="userdetail_for_update_Modal">
+                        <div class="modal-dialog modal-lg" id="myModaldia">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit User</h4>
+                                    <button type="button" id="modalclose" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(model => model.user_name, new { @class = "form-control", placeholder = "Username", id = "usernametxt" })
+                                                @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(model => model.password, new { @class = "form-control", placeholder = "Password", id = "passwordtxt" })
+                                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                                            </div>
+
+
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(model => model.confirm_password, new { @class = "form-control", placeholder = "Confirm Password", id = "confirmpaswordtxt" })
+                                                @Html.ValidationMessageFor(model => model.confirm_password, "", new { @class = "text-danger" })
+
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(model => model.email_address, new { @class = "form-control", placeholder = "Email Address", id = "emailtxt" })
+                                                @Html.ValidationMessageFor(model => model.email_address, "", new { @class = "text-danger" })
+
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(model => model.contact_no, new { @class = "form-control", placeholder = "Contact", id = "contacttxt" })
+                                                @Html.ValidationMessageFor(model => model.contact_no, "", new { @class = "text-danger" })
+
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.DropDownList(" ", @ViewBag.role as SelectList, "Select", new { id = "userrolelist", @class = "form-control" })
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                @Html.DropDownListFor(model => model.user_status, @ViewBag.userstatus as SelectList, "Select", new { @class = "form-control", id = "userstatusdropdown" })
+                                                @Html.ValidationMessageFor(model => model.user_status, "", new { @class = "text-danger" })
+                                                @Html.TextBox(" ", " ", new { type = "file", @class = "d-none", id = "editfiledialog" })
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <input type="button" value="Choose Photo" class="btn btn-outline-secondary btn-block" id="editchoosephotobtn" />
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <input type="button" value="Save Changes" class="btn btn-primary btn-block" id="editusersavebtn" data-dismiss="modal" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img src="" id="upuserimg" height="250" width="250" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/custom.js"></script>

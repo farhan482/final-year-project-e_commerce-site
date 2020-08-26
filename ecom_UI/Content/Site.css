@@ -1,0 +1,9 @@
+﻿.left i {
+   
+   position:absolute;
+   right:0;
+}
+.right i {
+    position: absolute;
+    left: 0;
+}

@@ -1,0 +1,839 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="_role_tbl">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_role" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="category_tbl">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="con_id" />
+          </Key>
+          <Property Name="con_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="subject" Type="varchar" MaxLength="100" />
+          <Property Name="message" Type="varchar(max)" />
+          <Property Name="status" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="offer">
+          <Key>
+            <PropertyRef Name="of_id" />
+          </Key>
+          <Property Name="of_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_name" Type="varchar" MaxLength="100" />
+          <Property Name="product_description" Type="varchar(max)" />
+          <Property Name="image_path" Type="varchar(max)" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="order_address_details_tbl">
+          <Key>
+            <PropertyRef Name="o_addrs_id" />
+          </Key>
+          <Property Name="o_addrs_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" />
+          <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="address" Type="varchar(max)" />
+          <Property Name="zip_or_postal_code" Type="varchar" MaxLength="50" />
+          <Property Name="order_person_name" Type="varchar" MaxLength="50" />
+          <Property Name="contact_no" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="order_amount_details_tbl">
+          <Key>
+            <PropertyRef Name="order_no" />
+          </Key>
+          <Property Name="order_no" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_date_and_time" Type="varchar" MaxLength="100" />
+          <Property Name="net_total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="order_status" Type="varchar" MaxLength="100" />
+          <Property Name="payment_type" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="order_product_detaills_tbl">
+          <Key>
+            <PropertyRef Name="opd_id" />
+          </Key>
+          <Property Name="opd_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qty" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="rate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="p_id" Type="int" />
+          <Property Name="order_no" Type="int" />
+          <Property Name="o_addrs_id" Type="int" />
+        </EntityType>
+        <EntityType Name="product_img">
+          <Key>
+            <PropertyRef Name="image_id" />
+          </Key>
+          <Property Name="image_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="image_path" Type="varchar(max)" />
+          <Property Name="p_id" Type="int" />
+        </EntityType>
+        <EntityType Name="product_tbl">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_name" Type="varchar" MaxLength="50" />
+          <Property Name="product_description" Type="varchar(max)" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="discount_percentage" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="discounted_price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="net_price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="status" Type="int" />
+          <Property Name="sub_category_id" Type="int" />
+          <Property Name="brand_manfacturer" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="sub_category_tbl">
+          <Key>
+            <PropertyRef Name="sub_cate_id" />
+          </Key>
+          <Property Name="sub_cate_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sub_category_name" Type="varchar" MaxLength="100" />
+          <Property Name="parent_category_id" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="user_img_tbl">
+          <Key>
+            <PropertyRef Name="user_img_id" />
+          </Key>
+          <Property Name="user_img_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="image_path" Type="varchar(max)" />
+          <Property Name="user_id" Type="int" />
+        </EntityType>
+        <EntityType Name="user_tbl">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="100" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
+          <Property Name="confirm_password" Type="varchar" MaxLength="100" />
+          <Property Name="email_address" Type="varchar" MaxLength="100" />
+          <Property Name="contact_no" Type="varchar" MaxLength="100" />
+          <Property Name="user_status" Type="int" />
+        </EntityType>
+        <EntityType Name="userrole_tbl">
+          <Key>
+            <PropertyRef Name="userrole_id" />
+          </Key>
+          <Property Name="userrole_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="role_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__order_pro__o_add__10216507">
+          <End Role="order_address_details_tbl" Type="Self.order_address_details_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="order_product_detaills_tbl" Type="Self.order_product_detaills_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order_address_details_tbl">
+              <PropertyRef Name="o_addrs_id" />
+            </Principal>
+            <Dependent Role="order_product_detaills_tbl">
+              <PropertyRef Name="o_addrs_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order_pro__order__0F2D40CE">
+          <End Role="order_amount_details_tbl" Type="Self.order_amount_details_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="order_product_detaills_tbl" Type="Self.order_product_detaills_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order_amount_details_tbl">
+              <PropertyRef Name="order_no" />
+            </Principal>
+            <Dependent Role="order_product_detaills_tbl">
+              <PropertyRef Name="order_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order_prod__p_id__0E391C95">
+          <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="0..1" />
+          <End Role="order_product_detaills_tbl" Type="Self.order_product_detaills_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_tbl">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="order_product_detaills_tbl">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product_im__p_id__44CA3770">
+          <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="product_img" Type="Self.product_img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_tbl">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="product_img">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product_t__sub_c__41EDCAC5">
+          <End Role="sub_category_tbl" Type="Self.sub_category_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sub_category_tbl">
+              <PropertyRef Name="sub_cate_id" />
+            </Principal>
+            <Dependent Role="product_tbl">
+              <PropertyRef Name="sub_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sub_categ__paren__29221CFB">
+          <End Role="category_tbl" Type="Self.category_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="sub_category_tbl" Type="Self.sub_category_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category_tbl">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="sub_category_tbl">
+              <PropertyRef Name="parent_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_img___user___56E8E7AB">
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_img_tbl" Type="Self.user_img_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_tbl">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="user_img_tbl">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userrole___role___540C7B00">
+          <End Role="_role_tbl" Type="Self._role_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userrole_tbl" Type="Self.userrole_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_role_tbl">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="userrole_tbl">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userrole___user___531856C7">
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userrole_tbl" Type="Self.userrole_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_tbl">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="userrole_tbl">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="_role_tbl" EntityType="Self._role_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category_tbl" EntityType="Self.category_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contact" EntityType="Self.contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="offer" EntityType="Self.offer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_address_details_tbl" EntityType="Self.order_address_details_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_amount_details_tbl" EntityType="Self.order_amount_details_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_product_detaills_tbl" EntityType="Self.order_product_detaills_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product_img" EntityType="Self.product_img" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product_tbl" EntityType="Self.product_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sub_category_tbl" EntityType="Self.sub_category_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_img_tbl" EntityType="Self.user_img_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_tbl" EntityType="Self.user_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userrole_tbl" EntityType="Self.userrole_tbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__order_pro__o_add__10216507" Association="Self.FK__order_pro__o_add__10216507">
+            <End Role="order_address_details_tbl" EntitySet="order_address_details_tbl" />
+            <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order_pro__order__0F2D40CE" Association="Self.FK__order_pro__order__0F2D40CE">
+            <End Role="order_amount_details_tbl" EntitySet="order_amount_details_tbl" />
+            <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order_prod__p_id__0E391C95" Association="Self.FK__order_prod__p_id__0E391C95">
+            <End Role="product_tbl" EntitySet="product_tbl" />
+            <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product_im__p_id__44CA3770" Association="Self.FK__product_im__p_id__44CA3770">
+            <End Role="product_tbl" EntitySet="product_tbl" />
+            <End Role="product_img" EntitySet="product_img" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product_t__sub_c__41EDCAC5" Association="Self.FK__product_t__sub_c__41EDCAC5">
+            <End Role="sub_category_tbl" EntitySet="sub_category_tbl" />
+            <End Role="product_tbl" EntitySet="product_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sub_categ__paren__29221CFB" Association="Self.FK__sub_categ__paren__29221CFB">
+            <End Role="category_tbl" EntitySet="category_tbl" />
+            <End Role="sub_category_tbl" EntitySet="sub_category_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_img___user___56E8E7AB" Association="Self.FK__user_img___user___56E8E7AB">
+            <End Role="user_tbl" EntitySet="user_tbl" />
+            <End Role="user_img_tbl" EntitySet="user_img_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userrole___role___540C7B00" Association="Self.FK__userrole___role___540C7B00">
+            <End Role="_role_tbl" EntitySet="_role_tbl" />
+            <End Role="userrole_tbl" EntitySet="userrole_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userrole___user___531856C7" Association="Self.FK__userrole___user___531856C7">
+            <End Role="user_tbl" EntitySet="user_tbl" />
+            <End Role="userrole_tbl" EntitySet="userrole_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C_role_tbl">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_role" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="userrole_tbl" Relationship="Self.FK__userrole___role___540C7B00" FromRole="C_role_tbl" ToRole="userrole_tbl" />
+        </EntityType>
+        <EntityType Name="category_tbl">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="sub_category_tbl" Relationship="Self.FK__sub_categ__paren__29221CFB" FromRole="category_tbl" ToRole="sub_category_tbl" />
+        </EntityType>
+        <EntityType Name="order_address_details_tbl">
+          <Key>
+            <PropertyRef Name="o_addrs_id" />
+          </Key>
+          <Property Name="o_addrs_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="zip_or_postal_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="order_person_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contact_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="order_product_detaills_tbl" Relationship="Self.FK__order_pro__o_add__10216507" FromRole="order_address_details_tbl" ToRole="order_product_detaills_tbl" />
+        </EntityType>
+        <EntityType Name="order_amount_details_tbl">
+          <Key>
+            <PropertyRef Name="order_no" />
+          </Key>
+          <Property Name="order_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_date_and_time" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="net_total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="order_status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="payment_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="order_product_detaills_tbl" Relationship="Self.FK__order_pro__order__0F2D40CE" FromRole="order_amount_details_tbl" ToRole="order_product_detaills_tbl" />
+        </EntityType>
+        <EntityType Name="order_product_detaills_tbl">
+          <Key>
+            <PropertyRef Name="opd_id" />
+          </Key>
+          <Property Name="opd_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qty" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="rate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="p_id" Type="Int32" />
+          <Property Name="order_no" Type="Int32" />
+          <Property Name="o_addrs_id" Type="Int32" />
+          <NavigationProperty Name="order_address_details_tbl" Relationship="Self.FK__order_pro__o_add__10216507" FromRole="order_product_detaills_tbl" ToRole="order_address_details_tbl" />
+          <NavigationProperty Name="order_amount_details_tbl" Relationship="Self.FK__order_pro__order__0F2D40CE" FromRole="order_product_detaills_tbl" ToRole="order_amount_details_tbl" />
+          <NavigationProperty Name="product_tbl" Relationship="Self.FK__order_prod__p_id__0E391C95" FromRole="order_product_detaills_tbl" ToRole="product_tbl" />
+        </EntityType>
+        <EntityType Name="product_img">
+          <Key>
+            <PropertyRef Name="image_id" />
+          </Key>
+          <Property Name="image_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="image_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="p_id" Type="Int32" />
+          <NavigationProperty Name="product_tbl" Relationship="Self.FK__product_im__p_id__44CA3770" FromRole="product_img" ToRole="product_tbl" />
+        </EntityType>
+        <EntityType Name="product_tbl">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="product_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="discount_percentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="discounted_price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="net_price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="sub_category_id" Type="Int32" />
+          <Property Name="brand_manfacturer" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="order_product_detaills_tbl" Relationship="Self.FK__order_prod__p_id__0E391C95" FromRole="product_tbl" ToRole="order_product_detaills_tbl" />
+          <NavigationProperty Name="product_img" Relationship="Self.FK__product_im__p_id__44CA3770" FromRole="product_tbl" ToRole="product_img" />
+          <NavigationProperty Name="sub_category_tbl" Relationship="Self.FK__product_t__sub_c__41EDCAC5" FromRole="product_tbl" ToRole="sub_category_tbl" />
+        </EntityType>
+        <EntityType Name="sub_category_tbl">
+          <Key>
+            <PropertyRef Name="sub_cate_id" />
+          </Key>
+          <Property Name="sub_cate_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sub_category_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="parent_category_id" Type="Int32" />
+          <NavigationProperty Name="category_tbl" Relationship="Self.FK__sub_categ__paren__29221CFB" FromRole="sub_category_tbl" ToRole="category_tbl" />
+          <NavigationProperty Name="product_tbl" Relationship="Self.FK__product_t__sub_c__41EDCAC5" FromRole="sub_category_tbl" ToRole="product_tbl" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="user_img_tbl">
+          <Key>
+            <PropertyRef Name="user_img_id" />
+          </Key>
+          <Property Name="user_img_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="image_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int32" />
+          <NavigationProperty Name="user_tbl" Relationship="Self.FK__user_img___user___56E8E7AB" FromRole="user_img_tbl" ToRole="user_tbl" />
+        </EntityType>
+        <EntityType Name="user_tbl">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="confirm_password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email_address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contact_no" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="user_status" Type="Int32" />
+          <NavigationProperty Name="user_img_tbl" Relationship="Self.FK__user_img___user___56E8E7AB" FromRole="user_tbl" ToRole="user_img_tbl" />
+          <NavigationProperty Name="userrole_tbl" Relationship="Self.FK__userrole___user___531856C7" FromRole="user_tbl" ToRole="userrole_tbl" />
+        </EntityType>
+        <EntityType Name="userrole_tbl">
+          <Key>
+            <PropertyRef Name="userrole_id" />
+          </Key>
+          <Property Name="userrole_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="role_id" Type="Int32" />
+          <NavigationProperty Name="C_role_tbl" Relationship="Self.FK__userrole___role___540C7B00" FromRole="userrole_tbl" ToRole="C_role_tbl" />
+          <NavigationProperty Name="user_tbl" Relationship="Self.FK__userrole___user___531856C7" FromRole="userrole_tbl" ToRole="user_tbl" />
+        </EntityType>
+        <Association Name="FK__userrole___role___540C7B00">
+          <End Role="C_role_tbl" Type="Self.C_role_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userrole_tbl" Type="Self.userrole_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_role_tbl">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="userrole_tbl">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sub_categ__paren__29221CFB">
+          <End Role="category_tbl" Type="Self.category_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="sub_category_tbl" Type="Self.sub_category_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category_tbl">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="sub_category_tbl">
+              <PropertyRef Name="parent_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order_pro__o_add__10216507">
+          <End Role="order_address_details_tbl" Type="Self.order_address_details_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="order_product_detaills_tbl" Type="Self.order_product_detaills_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order_address_details_tbl">
+              <PropertyRef Name="o_addrs_id" />
+            </Principal>
+            <Dependent Role="order_product_detaills_tbl">
+              <PropertyRef Name="o_addrs_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order_pro__order__0F2D40CE">
+          <End Role="order_amount_details_tbl" Type="Self.order_amount_details_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="order_product_detaills_tbl" Type="Self.order_product_detaills_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order_amount_details_tbl">
+              <PropertyRef Name="order_no" />
+            </Principal>
+            <Dependent Role="order_product_detaills_tbl">
+              <PropertyRef Name="order_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__order_prod__p_id__0E391C95">
+          <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="0..1" />
+          <End Role="order_product_detaills_tbl" Type="Self.order_product_detaills_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_tbl">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="order_product_detaills_tbl">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product_im__p_id__44CA3770">
+          <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="product_img" Type="Self.product_img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_tbl">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="product_img">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product_t__sub_c__41EDCAC5">
+          <End Role="sub_category_tbl" Type="Self.sub_category_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sub_category_tbl">
+              <PropertyRef Name="sub_cate_id" />
+            </Principal>
+            <Dependent Role="product_tbl">
+              <PropertyRef Name="sub_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_img___user___56E8E7AB">
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_img_tbl" Type="Self.user_img_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_tbl">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="user_img_tbl">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__userrole___user___531856C7">
+          <End Role="user_tbl" Type="Self.user_tbl" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="userrole_tbl" Type="Self.userrole_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_tbl">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="userrole_tbl">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ecommerce_site_version_v_19_0Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C_role_tbl" EntityType="Self.C_role_tbl" />
+          <EntitySet Name="category_tbl" EntityType="Self.category_tbl" />
+          <EntitySet Name="order_address_details_tbl" EntityType="Self.order_address_details_tbl" />
+          <EntitySet Name="order_amount_details_tbl" EntityType="Self.order_amount_details_tbl" />
+          <EntitySet Name="order_product_detaills_tbl" EntityType="Self.order_product_detaills_tbl" />
+          <EntitySet Name="product_img" EntityType="Self.product_img" />
+          <EntitySet Name="product_tbl" EntityType="Self.product_tbl" />
+          <EntitySet Name="sub_category_tbl" EntityType="Self.sub_category_tbl" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="user_img_tbl" EntityType="Self.user_img_tbl" />
+          <EntitySet Name="user_tbl" EntityType="Self.user_tbl" />
+          <EntitySet Name="userrole_tbl" EntityType="Self.userrole_tbl" />
+          <AssociationSet Name="FK__userrole___role___540C7B00" Association="Self.FK__userrole___role___540C7B00">
+            <End Role="C_role_tbl" EntitySet="C_role_tbl" />
+            <End Role="userrole_tbl" EntitySet="userrole_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sub_categ__paren__29221CFB" Association="Self.FK__sub_categ__paren__29221CFB">
+            <End Role="category_tbl" EntitySet="category_tbl" />
+            <End Role="sub_category_tbl" EntitySet="sub_category_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order_pro__o_add__10216507" Association="Self.FK__order_pro__o_add__10216507">
+            <End Role="order_address_details_tbl" EntitySet="order_address_details_tbl" />
+            <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order_pro__order__0F2D40CE" Association="Self.FK__order_pro__order__0F2D40CE">
+            <End Role="order_amount_details_tbl" EntitySet="order_amount_details_tbl" />
+            <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__order_prod__p_id__0E391C95" Association="Self.FK__order_prod__p_id__0E391C95">
+            <End Role="product_tbl" EntitySet="product_tbl" />
+            <End Role="order_product_detaills_tbl" EntitySet="order_product_detaills_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product_im__p_id__44CA3770" Association="Self.FK__product_im__p_id__44CA3770">
+            <End Role="product_tbl" EntitySet="product_tbl" />
+            <End Role="product_img" EntitySet="product_img" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product_t__sub_c__41EDCAC5" Association="Self.FK__product_t__sub_c__41EDCAC5">
+            <End Role="sub_category_tbl" EntitySet="sub_category_tbl" />
+            <End Role="product_tbl" EntitySet="product_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_img___user___56E8E7AB" Association="Self.FK__user_img___user___56E8E7AB">
+            <End Role="user_tbl" EntitySet="user_tbl" />
+            <End Role="user_img_tbl" EntitySet="user_img_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__userrole___user___531856C7" Association="Self.FK__userrole___user___531856C7">
+            <End Role="user_tbl" EntitySet="user_tbl" />
+            <End Role="userrole_tbl" EntitySet="userrole_tbl" />
+          </AssociationSet>
+          <EntitySet Name="offers" EntityType="Model.offer" />
+          <EntitySet Name="contacts" EntityType="Model.contact" />
+        </EntityContainer>
+        <EntityType Name="offer">
+          <Key>
+            <PropertyRef Name="of_id" />
+          </Key>
+          <Property Name="of_id" Type="Int32" Nullable="false" />
+          <Property Name="product_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="product_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="image_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="con_id" />
+          </Key>
+          <Property Name="con_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="subject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ecommerce_site_version_v_19_0Entities">
+          <EntitySetMapping Name="C_role_tbl">
+            <EntityTypeMapping TypeName="Model.C_role_tbl">
+              <MappingFragment StoreEntitySet="_role_tbl">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="user_role" ColumnName="user_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="category_tbl">
+            <EntityTypeMapping TypeName="Model.category_tbl">
+              <MappingFragment StoreEntitySet="category_tbl">
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_address_details_tbl">
+            <EntityTypeMapping TypeName="Model.order_address_details_tbl">
+              <MappingFragment StoreEntitySet="order_address_details_tbl">
+                <ScalarProperty Name="o_addrs_id" ColumnName="o_addrs_id" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="zip_or_postal_code" ColumnName="zip_or_postal_code" />
+                <ScalarProperty Name="order_person_name" ColumnName="order_person_name" />
+                <ScalarProperty Name="contact_no" ColumnName="contact_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_amount_details_tbl">
+            <EntityTypeMapping TypeName="Model.order_amount_details_tbl">
+              <MappingFragment StoreEntitySet="order_amount_details_tbl">
+                <ScalarProperty Name="order_no" ColumnName="order_no" />
+                <ScalarProperty Name="order_date_and_time" ColumnName="order_date_and_time" />
+                <ScalarProperty Name="net_total" ColumnName="net_total" />
+                <ScalarProperty Name="order_status" ColumnName="order_status" />
+                <ScalarProperty Name="payment_type" ColumnName="payment_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_product_detaills_tbl">
+            <EntityTypeMapping TypeName="Model.order_product_detaills_tbl">
+              <MappingFragment StoreEntitySet="order_product_detaills_tbl">
+                <ScalarProperty Name="opd_id" ColumnName="opd_id" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="order_no" ColumnName="order_no" />
+                <ScalarProperty Name="o_addrs_id" ColumnName="o_addrs_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_img">
+            <EntityTypeMapping TypeName="Model.product_img">
+              <MappingFragment StoreEntitySet="product_img">
+                <ScalarProperty Name="image_id" ColumnName="image_id" />
+                <ScalarProperty Name="image_path" ColumnName="image_path" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_tbl">
+            <EntityTypeMapping TypeName="Model.product_tbl">
+              <MappingFragment StoreEntitySet="product_tbl">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="product_description" ColumnName="product_description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount_percentage" ColumnName="discount_percentage" />
+                <ScalarProperty Name="discounted_price" ColumnName="discounted_price" />
+                <ScalarProperty Name="net_price" ColumnName="net_price" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="sub_category_id" ColumnName="sub_category_id" />
+                <ScalarProperty Name="brand_manfacturer" ColumnName="brand_manfacturer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sub_category_tbl">
+            <EntityTypeMapping TypeName="Model.sub_category_tbl">
+              <MappingFragment StoreEntitySet="sub_category_tbl">
+                <ScalarProperty Name="sub_cate_id" ColumnName="sub_cate_id" />
+                <ScalarProperty Name="sub_category_name" ColumnName="sub_category_name" />
+                <ScalarProperty Name="parent_category_id" ColumnName="parent_category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_img_tbl">
+            <EntityTypeMapping TypeName="Model.user_img_tbl">
+              <MappingFragment StoreEntitySet="user_img_tbl">
+                <ScalarProperty Name="user_img_id" ColumnName="user_img_id" />
+                <ScalarProperty Name="image_path" ColumnName="image_path" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_tbl">
+            <EntityTypeMapping TypeName="Model.user_tbl">
+              <MappingFragment StoreEntitySet="user_tbl">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="confirm_password" ColumnName="confirm_password" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="contact_no" ColumnName="contact_no" />
+                <ScalarProperty Name="user_status" ColumnName="user_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userrole_tbl">
+            <EntityTypeMapping TypeName="Model.userrole_tbl">
+              <MappingFragment StoreEntitySet="userrole_tbl">
+                <ScalarProperty Name="userrole_id" ColumnName="userrole_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="offers">
+            <EntityTypeMapping TypeName="Model.offer">
+              <MappingFragment StoreEntitySet="offer">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image_path" ColumnName="image_path" />
+                <ScalarProperty Name="product_description" ColumnName="product_description" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="of_id" ColumnName="of_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contacts">
+            <EntityTypeMapping TypeName="Model.contact">
+              <MappingFragment StoreEntitySet="contact">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="con_id" ColumnName="con_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,29 @@
+﻿@model ecom_BOL.Model.category_tbl
+
+@{
+    ViewBag.Title = "Add Category";
+}
+<br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Category</h5>
+                        <br />
+                        <hr />
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.category_name, new { @class = "form-control", placeholder = "Category Name", id = "catetxt" })
+                        </div>
+                        <div class="form-group">
+                          
+                                <button class="btn btn-primary btn-block" id="btnsave">Save</button>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+        </div>  
+  
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/custom.js"></script>

@@ -1,0 +1,127 @@
+﻿@model ecom_BOL.Model.Custom_Model.custom_order
+@{
+    ViewBag.Title = "Order List";
+}
+<br />
+
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Order List</h5>
+                    <br />
+                    <hr />
+                    <table class="table table-sm table-striped table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>Order No#</th>
+                                <th>Order Date</th>
+                                <th>Net Total</th>
+                                <th>Payment Type</th>
+                                <th>Order Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderlist">
+                        </tbody>
+                    </table>
+                    <div class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" id="ordermodel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Order Detaills</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body  ">
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <h6>Order No# <span id="orshow"></span></h6>
+                                            <h6>Order Date : <span id="ordateshow"></span></h6>
+                                        </div>
+
+
+                                     
+
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Qty</th>
+                                                        <th>Rate</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ordertbllist">
+                                                </tbody>
+                                            </table>
+                                            <hr />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="col-md-4 text-right offset-5 pl-5">
+                                           
+                                            <h6>Net Total : </h6>
+                                            <h6>Payment Type : </h6>
+                                            <h6>Order Status : </h6>
+                                        </div>
+                                        <div class="col-md-3 ">
+                                           
+                                            <h6 id="nettotalshow"></h6>
+                                            <h6 id="paymenttypeshow"></h6>
+                                            @Html.DropDownList(" ", @ViewBag.orderstatus as SelectList, "Select Status", new { @class = "form-control-sm ", id = "orderstatusshow" })
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row jumbotron justify-content-end">
+                                      
+
+                                        <div class="col-md-12">  <h3 class="text-center">Shipping Details</h3></div>
+
+                                         
+                                     
+                                            <div class="col-md-6 text-right">
+                                                <h6>Country : </h6>
+                                                <h6>City    : </h6>
+                                                <h6>Address : </h6>
+                                                <h6>Zip/Postal   : </h6>
+                                                <h6>Name : </h6>
+                                                <h6>Contact No : </h6>
+                                            </div>
+
+
+                                            <div class="col-md-6 text-left ">
+                                                <h6 id="ctry"></h6>
+                                                <h6 id="city"></h6>
+                                                <h6 id="addrs"></h6>
+                                                <h6 id="zip"></h6>
+                                                <h6 id="pnane"></h6>
+                                                <h6 id="cno"></h6>
+                                            </div>
+                                      
+                                      
+
+                                    </div>
+                                    <br />
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveorderbtn">Save Order</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div></div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/custom.js"></script>

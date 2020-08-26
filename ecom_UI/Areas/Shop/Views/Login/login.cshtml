@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "login";
+}
+
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>Login to your account</h2>
+                    <form>
+                        <input type="text" placeholder="Username" id="username"/>
+                        <input type="password" placeholder="Passsword" id="password"/>
+                        <span>
+                            <label>
+                                <input type="checkbox" class="checkbox">
+                                Show Password
+                            </label>
+                        </span>
+                        <button type="button" class="btn btn-default" id="loginbtn">Login</button>
+                    </form>
+                </div><!--/login form-->
+            </div>
+            <div class="col-sm-1">
+                <h2 class="or">OR</h2>
+            </div>
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>New User Signup!</h2>
+                    <form>
+                        <input type="text" id="Username" placeholder="Username" />
+                        <input type="password" placeholder="Password" id="Password" />
+                        <input type="password" placeholder="Confirm Password" id="Confirmpas" />
+                        <input type="email" placeholder="Email Address" id="Email" />
+                        <input type="text" placeholder="Phone *" id="Phone" />
+                        <input type="file" id="file" class="d-none"/>
+                        <button type="button" class="btn btn-block mb-2" id="choosebtn">Choose Photo</button>
+                        <button type="submit" class="btn btn-default" id="saveuser">Signup</button>
+                    </form>
+                </div><!--/sign up form-->
+            </div>
+            <div class="col-sm-3">
+                <img src="" height="100" width="100" id="userimg"/>
+            </div>
+        </div>
+    </div>
+</section><!--/form-->
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        $("#userimg").attr("src", "/productimages/noimg.jpg")
+        var img;
+        choosephoto()
+        adduser()
+        logged()
+        showpass()
+    })
+    function showpass()
+    {
+        $(".checkbox").change(function () {
+            if ($(this).is(":checked")) {
+                $("#password").attr("type", "text")
+            }
+            else
+            {
+                $("#password").attr("type", "password")
+            }
+        })
+    }
+    function logged()
+    {
+        $("#loginbtn").click(function () {
+            var username = $("#username").val()
+            var password = $("#password").val()
+            var formdata = new FormData()
+            formdata.append("user.user_name",username)
+            formdata.append("user.password",password)
+            $.ajax({
+                type: 'POST',
+                url: '/Shop/Login/loggeduser',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                success: function () {
+                      window.location.href = "/Shop/Home/Home"                                
+                }
+
+            })
+        })
+    }
+    function choosephoto()
+    {
+        $("#choosebtn").click(function () {
+            $("#file").trigger("click")
+            $("#file").change(function () {
+                img = this.files
+                var reader = new FileReader()
+                reader.readAsDataURL(img[0])
+                reader.onload = function (x)
+                {
+                    $("#userimg").attr("src", x.target.result)
+                }
+
+
+
+
+            })
+
+
+        })
+    }
+    function adduser()
+    {
+        $("#saveuser").click(function () {
+            var name = $("#Username").val()
+            var Password = $("#Password").val()
+            var Confirmpas = $("#Confirmpas").val()
+            var Email = $("#Email").val()
+            var Phone = $("#Phone").val()
+            var formdata = new FormData()
+            formdata.append("user.user.user_name", name)
+            formdata.append("user.user.password", Password)
+            formdata.append("user.user.confirm_password", Confirmpas)
+            formdata.append("user.user.email_address", Email)
+            formdata.append("user.user.contact_no", Phone)
+            formdata.append("user.user_image.userimg", img[0])
+            formdata.append("user.user_role.user_id", 1)
+            $.ajax({
+                type: 'POST',
+                url: '/Shop/Login/userregister',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    $("#Username").val("")
+                    $("#Password").val("")
+                    $("#Confirmpas").val("")
+                    $("#Email").val("")
+                    $("#Phone").val("")
+                    $("#userimg").attr("src", "/productimages/noimg.jpg")
+                }
+
+            })
+        })
+    }
+</script>

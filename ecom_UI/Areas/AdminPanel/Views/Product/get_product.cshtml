@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Product List";
+}
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Product List</h5>
+                    <br />
+                    <hr />
+                    <table class="table table-hover table-sm text-center">
+                        <thead>
+                            <tr class="table">
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Brand Manafacturer</th>
+                                <th>Product Price</th>
+                                <th>Disc%</th>
+                                <th>Discounted Price</th>
+                                <th>Net Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table" id="data">
+                        </tbody>
+                    </table>
+              
+
+
+                    <div class="modal fade bd-example-modal-lg" id="proupdateModal">
+                        <div class="modal-dialog modal-lg" id="myModaldia">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Product Update</h4>
+                                    <button type="button" id="modalclose" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+
+
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+
+                                                <div class="form-group">
+                                                    <div id="error"></div>
+                                                    <br />
+                                                    @Html.Hidden(" ", "", new { id = "hdnproductid" })
+                                                    <label><b>Name</b></label>
+                                                    @Html.TextBox(" ", " ", new { id = "pnametxt", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Description</b></label>
+                                                    @Html.TextArea(" ", " ", 8, 8, new { id = "pdectxt", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Brand Manafacturer</b></label>
+                                                    @Html.TextBox(" ", " ", new { id = "brandtxt", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Price</b></label>
+                                                    @Html.TextBox(" ", " ", new { id = "pricetxt", @class = "form-control" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <br />
+                                                <div class="form-group">
+                                                    <label><b>Disc%</b></label>
+                                                    @Html.TextBox(" ", " ", new { id = "discount_percentage", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Discounted Price</b></label>
+                                                    @Html.TextBox(" ", " ", new { id = "discounted_price", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Net Price</b></label>
+                                                    @Html.TextBox(" ", " ", new { id = "net_price", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Category</b></label>
+                                                    @Html.DropDownList(" ", @ViewBag.category as SelectList, "select", new { id = "category", @class = "form-control" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Status</b></label>
+                                                    @Html.DropDownList(" ", @ViewBag.status as SelectList, "select", new { id = "status", @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="text-right">
+                                            <small> <label id="imgsizeerror" class=""></label></small>
+                                            <button class="badge badge-primary p-2" id="addimg"><i class="fa fa-plus"></i> Add Images</button>
+
+                                            <input type="file" id="addmoreimgfile" class="d-none" multiple="multiple" />
+                                        </div>
+                                    </div>
+                                    <table class="table table-sm table-hover ">
+                                        <thead></thead>
+                                        <tbody id="imgshow"></tbody>
+                                    </table>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-primary btn-block" id="updatebtn" value="Save" />
+                                </div>
+                            </div>
+                            <div id="exdiv">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/custom.js"></script>

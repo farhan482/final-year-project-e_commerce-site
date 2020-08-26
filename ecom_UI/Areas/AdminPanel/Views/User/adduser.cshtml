@@ -1,0 +1,90 @@
+﻿@model ecom_BOL.Model.user_tbl
+
+@{
+    ViewBag.Title = "Add User";
+}
+<br />
+
+<div class="container">
+    <div class="row">
+
+      
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Add New User</h5>
+                    <br />
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.user_name, new { @class = "form-control", placeholder = "Username", id = "usernametxt" })
+                        @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.password, new { @class = "form-control", placeholder = "Password", id = "passwordtxt" })
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.confirm_password, new { @class = "form-control", placeholder = "Confirm Password", id = "confirmpaswordtxt" })
+                        @Html.ValidationMessageFor(model => model.confirm_password, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.email_address, new { @class = "form-control", placeholder = "Email Address", id = "emailtxt" })
+                        @Html.ValidationMessageFor(model => model.email_address, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.TextBoxFor(model => model.contact_no, new { @class = "form-control", placeholder = "Contact", id = "contacttxt" })
+                        @Html.ValidationMessageFor(model => model.contact_no, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+
+                        @Html.DropDownList(" ", @ViewBag.role as SelectList, "Select", new { @class = "form-control", id = "roledropdown" })
+                        @Html.ValidationMessageFor(model => model.user_status, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+
+                        @Html.DropDownListFor(model => model.user_status, @ViewBag.userstatus as SelectList, "Select", new { @class = "form-control", id = "userstatusdropdown" })
+                        @Html.ValidationMessageFor(model => model.user_status, "", new { @class = "text-danger" })
+                        @Html.TextBox(" ", " ", new { type = "file", @class = "d-none", id = "filedialog" })
+
+                    </div>
+                    <div class="form-group">
+
+                        <input type="button" value="Choose Photo" class="btn btn-outline-secondary btn-block" id="choosephotobtn" />
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="button" value="Save" class="btn btn-primary btn-block" id="usersavebtn" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            
+                    <img src="" id="userimage" height="300" width="300" class="rounded" />
+               
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/custom.js"></script>

@@ -1,0 +1,232 @@
+﻿@model ecom_BOL.Model.Custom_Model.product_and_image
+
+@{
+    ViewBag.Title = "Add Product";
+}
+<br />
+
+                    @using (Ajax.BeginForm("Create_Product", "Product", new AjaxOptions()
+                    {
+                        HttpMethod = "POST",
+                        LoadingElementId = "loader",
+                        LoadingElementDuration = 1500,
+                        OnSuccess = "fieldclear()"
+                    }, new { @enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div id="loader" style="display:none;">
+                            <img src="~/productimages/unnamed.gif" />
+                        </div>
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5>Add Product</h5>
+
+                                                <hr />
+
+
+                                                <div class="form-group">
+
+                                                    @Html.TextBoxFor(model => model.product.product_name, new { id = "nametxt", @class = "form-control", placeholder = "Product Name" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.product_name, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    @Html.TextBoxFor(model => model.product.product_description, new { id = "desctxt", @class = "form-control", placeholder = "Product Description" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.product_description, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+                                                <div class="form-group">
+
+                                                    @Html.TextBoxFor(model => model.product.brand_manfacturer, new { id = "brandtxt", @class = "form-control", placeholder = "Brand Manafacturer" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.brand_manfacturer, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    @Html.TextBoxFor(model => model.product.price, new { id = "pricetxt", @class = "form-control", placeholder = "Product Price" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.price, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    @Html.TextBoxFor(model => model.product.discount_percentage, new { id = "dptxt", @class = "form-control", placeholder = "Product Disc%" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.discount_percentage, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    @Html.TextBoxFor(model => model.product.discounted_price, new { id = "discpricetxt", @class = "form-control", placeholder = "Product Discounted Price" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.discounted_price, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    @Html.TextBoxFor(model => model.product.net_price, new { id = "netpricetxt", @class = "form-control", placeholder = "Product Net Price" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.net_price, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    @Html.DropDownListFor(model => model.sub_category.sub_cate_id, @ViewBag.category as SelectList, "Select", new { id = "catetxt", @class = "form-control" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.sub_category.sub_cate_id, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+
+                                                    @Html.DropDownListFor(model => model.product.status, @ViewBag.status as SelectList, "Select", new { id = "statustxt", @class = "form-control" })
+                                                    <small>
+                                                        @Html.ValidationMessageFor(model => model.product.status, "", new { @class = "text-danger" })
+                                                    </small>
+
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <input type="submit" value="Save" class="btn btn-primary btn-block" id="btnsave" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Choose Product Images</h5>
+                                                <br />
+                                                <hr />
+                                                <div class="form-group">
+                                                    <input type="button" value="Choose Images" class="btn btn-outline-secondary btn-block" id="chimg" />
+                                                    @Html.TextBoxFor(model => model.productimage.img, new { id = "proimg", type = "file", multiple = "multiple", @class = "form-control d-none" })
+                                                    <small id="proimgvalid" class="">
+                                                        @Html.ValidationMessageFor(model => model.productimage.img, "", new { @class = "text-danger" })
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                                            }
+                                       
+                              
+                           
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#proimgvalid").attr("class", "text-info")
+        $("#proimgvalid").html("<b><h5></h5>Each Image Size Must Be 1MB OR Less Then 1MB</b>")
+        $("#chimg").click(function () {
+            $("#proimg").trigger("click")
+            $("#proimg").change(function () {
+                var files = this.files;
+                $.each(files, function (k, v) {
+                    if (v.size <= 1000000) {
+                        $("#proimgvalid").text("")
+                        $("#btnsave").show();
+                    }
+                    else {
+                        $("#proimgvalid").attr("class", "text-danger")
+                        $("#proimgvalid").html("<b>Image Size Is Too Long ! </b>")
+                        $("#btnsave").hide();
+                        $("#proimg").val("");
+
+                    }
+
+
+
+
+
+                })
+
+
+
+
+
+            })
+
+
+        })
+        pricetxt
+        discpricetxt
+        $("#dptxt").focusout(function () {
+            var price = $("#pricetxt").val();
+            var disc = $("#dptxt").val();
+            var discprice = (price * disc) / 100;
+            $("#discpricetxt").val(discprice)
+            var netprice = (price - discprice);
+            $("#netpricetxt").val(netprice);
+        })
+
+        $("#discpricetxt").focusin(function () {
+            $("#dptxt").focus()
+
+        })
+        $("#netpricetxt").focusin(function () {
+            $("#dptxt").focus()
+
+        })
+
+
+    })
+
+
+
+
+
+    function fieldclear() {
+        $("#nametxt").val("");
+        $("#desctxt").val("");
+        $("#pricetxt").val("");
+        $("#dptxt").val("");
+        $("#discpricetxt").val("");
+        $("#netpricetxt").val("");
+        $("#catetxt").val("");
+        $("#statustxt").val("");
+        $("#proimg").val("");
+    }
+
+
+
+</script>

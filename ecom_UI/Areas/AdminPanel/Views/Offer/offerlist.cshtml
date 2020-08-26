@@ -1,0 +1,246 @@
+﻿@model ecom_BOL.Model.offer
+@{
+    ViewBag.Title = "Offer List";
+}
+<br />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User List</h5>
+                    <br />
+                    <hr />
+                    <table class="table table-sm table-striped text-center table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>Offer ID</th>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Product Description</th>
+                                <th>Price</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="userlist">
+                        </tbody>
+                    </table>
+
+                    <div class="modal fade bd-example-modal-lg " id="userdetail_for_update_Modal">
+                        <div class="modal-dialog modal-lg" id="myModaldia">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit Offer</h4>
+                                    <button type="button" id="modalclose" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(model => model.product_name, new { id = "nametxt", @class = "form-control", placeholder = "Product Name" })
+                                                <small>
+                                                    @Html.ValidationMessageFor(model => model.product_name, "", new { @class = "text-danger" })
+                                                </small>
+
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                @Html.TextAreaFor(model => model.product_description,5,5, new { id = "desctxt", @class = "form-control", placeholder = "Product Description" })
+                                                <small>
+                                                    @Html.ValidationMessageFor(model => model.product_description, "", new { @class = "text-danger" })
+                                                </small>
+
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(model => model.price, new { id = "pricetxt", @class = "form-control", placeholder = "Product Price" })
+                                                <small>
+                                                    @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                                                </small>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="button" value="Choose Images" class="btn btn-outline-secondary btn-block" id="chimg" />
+                                                @Html.TextBoxFor(model => model.image_path, new { id = "proimg", type = "file", multiple = "multiple", @class = "form-control d-none" })
+                                                <small id="proimgvalid" class="">
+                                                    @Html.ValidationMessageFor(model => model.image_path, "", new { @class = "text-danger" })
+                                                </small>
+                                            </div>
+
+
+                                            <div class="form-group">
+
+                                                <input type="button" value="Save Changes" class="btn btn-primary btn-block" id="editoffersavebtn" data-dismiss="modal" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img src="" id="upofferimg" height="250" width="250" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var file
+        var ofid
+        var oldimg
+        offerload()
+        chooseimage()
+        updateoffer()
+        function updateoffer()
+        {
+            $("#editoffersavebtn").click(function () {
+                var name = $("#nametxt").val()
+                var desctxt = $("#desctxt").val()
+                var pricetxt = $("#pricetxt").val()
+                var formdata = new FormData()
+                formdata.append("ofr.of_id", ofid)
+                formdata.append("ofr.product_name", name)
+                formdata.append("ofr.product_description", desctxt)
+                formdata.append("ofr.price", pricetxt)
+                if (oldimg != null) {
+                    formdata.append("ofr.image_path", oldimg)
+                }
+                else {
+                    formdata.append("ofr.offerimg", file[0])
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/AdminPanel/Offer/updateoffer',
+                    data: formdata,
+                    contentType: false,
+                    processData: false,
+                    success: function () {
+                        $("#userlist").empty()
+                        offerload()
+                    }
+                })
+
+
+
+
+            })
+        }
+        function chooseimage()
+        {
+            $("#chimg").click(function () {
+                $("#proimg").trigger("click")
+                $("#proimg").change(function () {
+                    file = this.files
+                    var reader = new FileReader()
+                    reader.readAsDataURL(file[0])
+                    reader.onload = function (x)
+                    {
+                        $("#upofferimg").attr("src", x.target.result)
+                        oldimg = null;
+                    }
+
+
+
+
+
+                })
+
+
+            })
+        }
+        function offerload() {
+            $.ajax({
+                type: 'GET',
+                url: '/AdminPanel/Offer/selectoffer',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $.each(data, function (k, v) {
+                        $("#userlist").append
+                            (
+                                "<tr>" +
+                                "<td>" + v.of_id + "</td>" +
+                                "<td><img src=" + v.image_path + " height='50' width='50'/></td>" +
+                                "<td>" + v.product_name + "</td>" +
+                                "<td>" + v.product_description + "</td>" +
+                                "<td>" + v.price + "</td>" +
+                                "<td><i class='fa fa-pencil-square text-primary fa-2x' data-toggle='modal' data-target='#userdetail_for_update_Modal' id='usereditbtn' itemid='" + v.of_id + "'></i>&nbsp;&nbsp;&nbsp;<i  class='fa fa-trash fa-2x text-danger' id='offerdeletebtn'  itemid='" + v.of_id + "'></i></td>" +
+                                "</tr >"
+                            )
+
+
+
+                    })
+                    $("#userlist #usereditbtn").click(function () {
+                      
+                        var id = $(this).attr("itemid");
+                        var formdata = new FormData()
+                        formdata.append("id",id)
+                      $.ajax({
+                          type: 'POST',
+                          url: '/AdminPanel/Offer/getofferbyid',
+                          data: formdata,
+                          contentType: false,
+                         processData: false,
+                           success: function (data) {
+                               $("#nametxt").val(data.product_name)
+                               $("#desctxt").val(data.product_description)
+                               $("#pricetxt").val(data.price)
+                               ofid = data.of_id
+                               oldimg = data.image_path
+                               $("#upofferimg").attr("src",data.image_path)
+                            }
+                       })
+
+
+                    })
+                    $("#userlist #offerdeletebtn").click(function () {
+
+                        var id = $(this).attr("itemid");
+                        var formdata = new FormData()
+                        formdata.append("id", id)
+                        $.ajax({
+                            type: 'POST',
+                            url: '/AdminPanel/Offer/deleteoffer',
+                            data: formdata,
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+                                $("#userlist").empty()
+                                offerload()
+                            }
+                        })
+
+
+                    })
+                }
+
+
+
+
+
+            })
+        }
+
+
+
+
+    })
+</script>
+  
+          
+          
+
+     

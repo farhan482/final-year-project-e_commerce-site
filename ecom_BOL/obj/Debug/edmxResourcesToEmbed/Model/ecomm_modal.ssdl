@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="category_tbl">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="product_img">
+    <Key>
+      <PropertyRef Name="image_id" />
+    </Key>
+    <Property Name="image_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="image_path" Type="varchar(max)" />
+    <Property Name="p_id" Type="int" />
+  </EntityType>
+  <EntityType Name="product_tbl">
+    <Key>
+      <PropertyRef Name="p_id" />
+    </Key>
+    <Property Name="p_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_name" Type="varchar" MaxLength="50" />
+    <Property Name="product_description" Type="varchar(max)" />
+    <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="discount_percentage" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="discounted_price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="net_price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="status" Type="int" />
+    <Property Name="category_id" Type="int" />
+  </EntityType>
+  <EntityType Name="sub_category_tbl">
+    <Key>
+      <PropertyRef Name="sub_cate_id" />
+    </Key>
+    <Property Name="sub_cate_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sub_category_name" Type="varchar" MaxLength="100" />
+    <Property Name="parent_category_id" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__product_im__p_id__1DB06A4F">
+    <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="product_img" Type="Self.product_img" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product_tbl">
+        <PropertyRef Name="p_id" />
+      </Principal>
+      <Dependent Role="product_img">
+        <PropertyRef Name="p_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__product_t__categ__1AD3FDA4">
+    <End Role="category_tbl" Type="Self.category_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="product_tbl" Type="Self.product_tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category_tbl">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="product_tbl">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__sub_categ__paren__29221CFB">
+    <End Role="category_tbl" Type="Self.category_tbl" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="sub_category_tbl" Type="Self.sub_category_tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category_tbl">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="sub_category_tbl">
+        <PropertyRef Name="parent_category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="category_tbl" EntityType="Self.category_tbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product_img" EntityType="Self.product_img" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product_tbl" EntityType="Self.product_tbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sub_category_tbl" EntityType="Self.sub_category_tbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__product_im__p_id__1DB06A4F" Association="Self.FK__product_im__p_id__1DB06A4F">
+      <End Role="product_tbl" EntitySet="product_tbl" />
+      <End Role="product_img" EntitySet="product_img" />
+    </AssociationSet>
+    <AssociationSet Name="FK__product_t__categ__1AD3FDA4" Association="Self.FK__product_t__categ__1AD3FDA4">
+      <End Role="category_tbl" EntitySet="category_tbl" />
+      <End Role="product_tbl" EntitySet="product_tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK__sub_categ__paren__29221CFB" Association="Self.FK__sub_categ__paren__29221CFB">
+      <End Role="category_tbl" EntitySet="category_tbl" />
+      <End Role="sub_category_tbl" EntitySet="sub_category_tbl" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
